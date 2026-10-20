@@ -1,0 +1,34 @@
+Movies loaded: 10000
+
+Sort movies by:
+1. IMDb Rating
+2. Year of Release
+3. Popularity (Votes)
+Enter choice: 
+Quick Sort completed successfully.
+Sorting time: 12788 microseconds
+
+First 20 sorted movies:
+------------------------------------------------------------
+Movie		Rating	Year	Votes
+------------------------------------------------------------
+Darkness Falls	4.9	2003	32936
+Year One	4.9	2009	101703
+The Crow: Salvation	4.9	2000	12015
+Pet Sematary II	4.9	1992	22636
+Ghosts of Mars	4.9	2001	56683
+Herbie Fully Loaded	4.9	2005	49875
+Primal	4.9	2019	10418
+Silent Hill: Revelation	4.9	2012	65753
+High School Musical 3: Senior Year	4.9	2008	65978
+Downhill	4.9	2020	13391
+Nobody Sleeps in the Woods Tonight	4.9	2020	13428
+Mother/Android	4.9	2021	20576
+Temptation: Confessions of a Marriage Counselor	4.9	2013	12311
+Valentine	4.9	2001	29586
+Honey, I Blew Up the Kid	4.9	1992	46014
+Tammy	4.9	2014	53660
+Gulliver's Travels	4.9	2010	72230
+Nekromantik	4.9	1988	10528
+Fantasy Island	4.9	2020	56192
+The Twilight Saga: Breaking Dawn - Part 1	4.9	2011	249318

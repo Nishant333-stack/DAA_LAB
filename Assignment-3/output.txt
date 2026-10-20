@@ -1,0 +1,16 @@
+Enter number of relief items: Enter boat capacity (kg): 
+Enter item details:
+Name Weight Value Divisible(1/0)
+
+Selected Relief Supplies:
+
+Item	Taken Weight	Utility	Fraction
+Medicine	20.00		200.00	1.00
+MedicalKit	25.00		250.00	1.00
+Blanket	15.00		60.00	1.00
+Food	40.00		120.00	1.00
+
+----------------------------------------
+Total Weight: 100.00 kg
+Total Utility: 630.00
+Remaining Capacity: 0.00 kg
