@@ -1,4 +1,4 @@
-yash@yash assignment_six % g++ knapsack.cpp -o ks && ./ks
+assignment_six % g++ knapsack.cpp -o ks && ./ks
 
 ========== DISASTER RELIEF RESOURCE ALLOCATION ==========
 Enter number of relief items: 5
