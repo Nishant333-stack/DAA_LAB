@@ -1,4 +1,4 @@
-yash@yash assignment_seven % g++ graph_color.cpp -o gc && ./gc
+assignment_seven % g++ graph_color.cpp -o gc && ./gc
 
 ========== UNIVERSITY EXAM TIMETABLE ==========
 
