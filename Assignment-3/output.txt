@@ -1,16 +1,53 @@
-Enter number of relief items: Enter boat capacity (kg): 
-Enter item details:
-Name Weight Value Divisible(1/0)
+yash@yash assignment_four % g++ djikstra.cpp -o d && ./d
 
-Selected Relief Supplies:
+========== AMBULANCE ROUTE OPTIMIZATION ==========
+Enter number of intersections: 5
+Enter number of roads: 6
 
-Item	Taken Weight	Utility	Fraction
-Medicine	20.00		200.00	1.00
-MedicalKit	25.00		250.00	1.00
-Blanket	15.00		60.00	1.00
-Food	40.00		120.00	1.00
+Enter roads as: from to travel_time
+0 1 4
+0 2 2
+1 2 1
+1 3 5
+2 3 8
+2 4 3
 
-----------------------------------------
-Total Weight: 100.00 kg
-Total Utility: 630.00
-Remaining Capacity: 0.00 kg
+================ ROAD NETWORK ================
+Road No.    From           To             Travel Time       
+------------------------------------------------------------
+1           0              1              4                 
+2           0              2              2                 
+3           1              2              1                 
+4           1              3              5                 
+5           2              3              8                 
+6           2              4              3                 
+------------------------------------------------------------
+
+Enter ambulance start location: 0
+Enter number of hospitals: 2
+Enter hospital node IDs: 3 4
+
+=============== SHORTEST DISTANCES ===============
+Node           Travel Time (min)     Previous Node  
+-------------------------------------------------------
+0              0                     -              
+1              3                     2              
+2              2                     0              
+3              8                     1              
+4              5                     2              
+-------------------------------------------------------
+
+================ HOSPITAL COMPARISON ================
+Hospital       Travel Time         Status            Shortest Route
+------------------------------------------------------------------------------------------
+3              8                   Reachable         0 -> 2 -> 1 -> 3
+4              5                   Reachable         0 -> 2 -> 4
+------------------------------------------------------------------------------------------
+
+================== FINAL RESULT ==================
+Ambulance Start Node : 0
+Nearest Hospital     : Node 4
+Shortest Path        : 0 -> 2 -> 4
+Minimum Travel Time  : 5 minutes
+=================================================
+++++
