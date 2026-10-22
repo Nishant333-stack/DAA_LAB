@@ -1,4 +1,4 @@
-yash@yash daa % g++ assignment_five/multigraph.cpp -o m && ./m
+daa % g++ assignment_five/multigraph.cpp -o m && ./m
 ========== MULTISTAGE GRAPH - DYNAMIC PROGRAMMING ==========
 Enter number of stages: 4
 Enter number of nodes in each stage (4 values): 1 2 2 1
