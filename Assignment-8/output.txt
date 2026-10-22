@@ -1,4 +1,4 @@
-yash@yash assignment_eight % g++ travelling_salesman.cpp -o ts && ./ts
+assignment_eight % g++ travelling_salesman.cpp -o ts && ./ts
 
 ========== TRAVELLING SALESMAN PROBLEM ==========
 Algorithm: Least Cost Branch and Bound
