@@ -1,47 +1,83 @@
-yash@yash assignment_eight % g++ travelling_salesman.cpp -o ts && ./ts
+yash@yash assignment_seven % g++ graph_color.cpp -o gc && ./gc
 
-========== TRAVELLING SALESMAN PROBLEM ==========
-Algorithm: Least Cost Branch and Bound
+========== UNIVERSITY EXAM TIMETABLE ==========
 
-Enter number of cities: 4
+--------------- SUBJECT LIST ---------------
+Node        Subject        
+---------------------------
+0           DAA
+1           AIML           
+2           SPM            
+3           EAC            
+4           MDM-3          
+---------------------------
 
-Enter cost matrix (0 for no road):
-0 10 15 20
-10 0 35 25
-15 35 0 30
-20 25 30 0
+Enter number of conflicts: 5
+Enter conflicting pairs (u v):
+0 1
+0 2
+1 2
+2 3
+3 4
 
-================ ORIGINAL COST MATRIX ================
-From/To     City 0      City 1      City 2      City 3      
-------------------------------------------------------------
-City 0      INF         10          15          20          
-City 1      10          INF         35          25          
-City 2      15          35          INF         30          
-City 3      20          25          30          INF
-------------------------------------------------------------
+================ CONFLICT GRAPH ================
+Conflict    Subject 1         Subject 2         Restriction
+-----------------------------------------------------------------
+1           DAA               AIML              Different slots
+2           DAA               SPM               Different slots
+3           AIML              SPM               Different slots
+4           SPM               EAC               Different slots
+5           EAC               MDM-3             Different slots
+-----------------------------------------------------------------
 
-================ INITIAL REDUCED MATRIX ================
-From/To     City 0      City 1      City 2      City 3
-------------------------------------------------------------
-City 0      INF         0           0           0           
-City 1      0           INF         20          5
-City 2      0           20          INF         5
-City 3      0           5           5           INF
-------------------------------------------------------------
-Initial Lower Bound : 70
+================ GRAPH COLOURING =================
+Node        Subject        Color ID    Color          Time Slot   
+------------------------------------------------------------------
+0           DAA            1           RED            1           
+1           AIML           2           GREEN          2           
+2           SPM            3           BLUE           3           
+3           EAC            1           RED            1           
+4           MDM-3          2           GREEN          2           
+------------------------------------------------------------------
 
-================ OPTIMAL ROUTE =================
-Step      From        To          Travel Cost     Cumulative Cost     
-----------------------------------------------------------------------
-1         0           2           15              15                  
-2         2           3           30              45                  
-3         3           1           25              70                  
-4         1           0           10              80                  
-----------------------------------------------------------------------
+Enter number of classrooms: 3
+Enter capacity of each room:
+Room 1 capacity: 150 
+Room 2 capacity: 100 
+Room 3 capacity: 80
 
-================ FINAL RESULT =================
-Starting City       : 0
-Total Cities        : 4
-Cities Visited      : 4
-Shortest Tour       : 0 -> 2 -> 3 -> 1 -> 0
-Minimum Travel Cost : 80
+Enter student count for each subject:
+DAA: 120
+AIML: 120
+SPM: 100
+EAC: 80
+MDM-3: 60
+
+================ CLASSROOM DETAILS ================
+Room           Capacity
+-----------------------------------
+1              150                 
+2              100                 
+3              80                  
+-----------------------------------
+
+================ FINAL EXAM TIMETABLE ================
+Time Slot   Color          Subject        Students    Room        Room Capacity  Status
+-------------------------------------------------------------------------------------------------
+1           RED            DAA            120         1           150            ALLOCATED
+1           RED            EAC            80          3           80             ALLOCATED
+2           GREEN          AIML           120         1           150            ALLOCATED
+2           GREEN          MDM-3          60          3           80             ALLOCATED
+3           BLUE           SPM            100         2           100            ALLOCATED
+-------------------------------------------------------------------------------------------------
+
+================ SCHEDULING SUMMARY ================
+Total Subjects       : 5
+Total Conflicts      : 5
+Total Time Slots     : 3
+Colors Used          : 3
+Available Classrooms : 3
+Exams Allocated      : 5/5
+Conflict Check       : PASSED
+Room Allocation      : COMPLETE
+====================================================
