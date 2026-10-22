@@ -1,4 +1,4 @@
-yash@yash assignment_three % g++ knapsack.cpp -o k && ./k
+assignment_three % g++ knapsack.cpp -o k && ./k
 ========== FRACTIONAL KNAPSACK ==========
 1. Enter items manually
 2. Read items from CSV
