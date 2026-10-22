@@ -1,4 +1,4 @@
-yash@yash assignment_four % g++ djikstra.cpp -o d && ./d
+assignment_four % g++ djikstra.cpp -o d && ./d
 
 ========== AMBULANCE ROUTE OPTIMIZATION ==========
 Enter number of intersections: 5
