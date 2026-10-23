@@ -1,234 +1,117 @@
-
-#include <iostream>
-#include <vector>
 #include <algorithm>
-#include <iomanip>
+#include <cstdio>
+#include <iostream>
 #include <string>
+#include <vector>
+
 using namespace std;
 
-struct Item {
-    int weight;
-    int utility;
-    int priority;
-    bool used = false;
-};
-
 int main() {
-    int n, trucks;
+    cout << "\n==============================================" << endl;
+    cout << "     DISASTER RELIEF RESOURCE ALLOCATION" << endl;
+    cout << "           0/1 KNAPSACK PROBLEM" << endl;
+    cout << "==============================================" << endl;
 
-    cout << "\n========== DISASTER RELIEF RESOURCE ALLOCATION ==========\n";
-
-    cout << "Enter number of relief items: ";
+    cout << "\nEnter number of items: ";
+    int n;
     cin >> n;
 
-    if (!cin || n <= 0) {
-        cout << "Invalid number of items.\n";
-        return 1;
-    }
+    vector<string> itemNames(n);
+    vector<int> weight(n);
+    vector<int> value(n);
 
-    vector<Item> items(n);
-
-    // Input relief items
-    for (int i = 0; i < n; i++) {
-        cout << "Item " << i + 1
-             << " (weight utility priority [0/1]): ";
-
-        cin >> items[i].weight
-            >> items[i].utility
-            >> items[i].priority;
-
-        if (!cin || items[i].weight <= 0 ||
-            items[i].utility < 0 ||
-            (items[i].priority != 0 && items[i].priority != 1)) {
-            cout << "Invalid item data.\n";
-            return 1;
-        }
-    }
-
-    // Display item inventory
-    cout << "\n================ RELIEF ITEM INVENTORY ================\n";
-
-    cout << left
-         << setw(10) << "Item"
-         << setw(15) << "Weight (kg)"
-         << setw(12) << "Utility"
-         << setw(12) << "Priority"
-         << setw(15) << "Bonus"
-         << setw(15) << "Final Utility"
-         << "\n";
-
-    cout << string(79, '-') << "\n";
+    cout << "\nEnter the item details:" << endl;
 
     for (int i = 0; i < n; i++) {
-        int bonus = items[i].priority == 1 ? 10 : 0;
+        cout << "\nItem " << (i + 1) << endl;
 
-        cout << left
-             << setw(10) << i + 1
-             << setw(15) << items[i].weight
-             << setw(12) << items[i].utility
-             << setw(12) << (items[i].priority == 1 ? "High" : "Normal")
-             << setw(15) << bonus
-             << setw(15) << items[i].utility + bonus
-             << "\n";
+        cout << "Item Name: ";
+        cin >> itemNames[i];
+
+        cout << "Weight (kg): ";
+        cin >> weight[i];
+
+        cout << "Utility Score: ";
+        cin >> value[i];
     }
 
-    cout << string(79, '-') << "\n";
+    cout << "\nEnter truck capacity (kg): ";
+    int W;
+    cin >> W;
 
-    cout << "\nEnter number of trucks: ";
-    cin >> trucks;
+    vector<vector<int>> dp(n + 1, vector<int>(W + 1, 0));
 
-    if (!cin || trucks <= 0) {
-        cout << "Invalid number of trucks.\n";
-        return 1;
-    }
+    // Dynamic Programming
+    for (int i = 1; i <= n; i++) {
+        for (int w = 0; w <= W; w++) {
+            if (weight[i - 1] <= w) {
+                int include = value[i - 1] + dp[i - 1][w - weight[i - 1]];
+                int exclude = dp[i - 1][w];
 
-    int grandTotalUtility = 0;
-    int grandTotalWeight = 0;
-
-    cout << "\nPriority bonus: +10 utility for high-priority items.\n";
-
-    for (int t = 1; t <= trucks; t++) {
-        int W;
-
-        cout << "\nEnter capacity of truck " << t << " (kg): ";
-        cin >> W;
-
-        if (!cin || W < 0) {
-            cout << "Invalid truck capacity.\n";
-            return 1;
-        }
-
-        // Build bottom-up 0/1 Knapsack DP table
-        vector<vector<int>> dp(n + 1, vector<int>(W + 1, 0));
-
-        for (int i = 1; i <= n; i++) {
-            for (int w = 0; w <= W; w++) {
-
-                // Option 1: Skip item
+                dp[i][w] = max(include, exclude);
+            } else {
                 dp[i][w] = dp[i - 1][w];
-
-                // Option 2: Include item if available and it fits
-                if (!items[i - 1].used &&
-                    items[i - 1].weight <= w) {
-
-                    int value = items[i - 1].utility;
-
-                    if (items[i - 1].priority == 1)
-                        value += 10;
-
-                    int include = value +
-                        dp[i - 1][w - items[i - 1].weight];
-
-                    dp[i][w] = max(dp[i][w], include);
-                }
             }
         }
-
-        // Backtrack and store selected items
-        int w = W;
-        vector<int> selected;
-
-        for (int i = n; i >= 1; i--) {
-
-            if (dp[i][w] != dp[i - 1][w]) {
-                selected.push_back(i - 1);
-                items[i - 1].used = true;
-                w -= items[i - 1].weight;
-            }
-        }
-
-        reverse(selected.begin(), selected.end());
-
-        int totalWeight = 0;
-        int totalUtility = 0;
-
-        cout << "\n================ TRUCK " << t
-             << " - SELECTED ITEMS ================\n";
-
-        cout << left
-             << setw(10) << "Item"
-             << setw(15) << "Weight (kg)"
-             << setw(12) << "Utility"
-             << setw(12) << "Priority"
-             << setw(12) << "Bonus"
-             << setw(15) << "Final Utility"
-             << "\n";
-
-        cout << string(76, '-') << "\n";
-
-        for (int index : selected) {
-            int bonus = items[index].priority == 1 ? 10 : 0;
-            int finalUtility = items[index].utility + bonus;
-
-            totalWeight += items[index].weight;
-            totalUtility += finalUtility;
-
-            cout << left
-                 << setw(10) << index + 1
-                 << setw(15) << items[index].weight
-                 << setw(12) << items[index].utility
-                 << setw(12) << (items[index].priority == 1 ? "High" : "Normal")
-                 << setw(12) << bonus
-                 << setw(15) << finalUtility
-                 << "\n";
-        }
-
-        if (selected.empty()) {
-            cout << "No suitable items selected.\n";
-        }
-
-        cout << string(76, '-') << "\n";
-
-        int remainingCapacity = W - totalWeight;
-
-        cout << "\n---------------- TRUCK " << t << " SUMMARY ----------------\n";
-        cout << "Truck Capacity       : " << W << " kg\n";
-        cout << "Total Weight Loaded  : " << totalWeight << " kg\n";
-        cout << "Remaining Capacity   : " << remainingCapacity << " kg\n";
-        cout << "Items Selected       : " << selected.size() << "\n";
-        cout << "Maximum Utility      : " << dp[n][W] << "\n";
-        cout << "--------------------------------------------------\n";
-
-        grandTotalWeight += totalWeight;
-        grandTotalUtility += totalUtility;
     }
 
-    // Final resource allocation summary
-    cout << "\n=============== FINAL ALLOCATION SUMMARY ===============\n";
+    // Trace back to find selected items
+    vector<bool> selected(n, false);
+    int remainingCapacity = W;
+    int totalWeight = 0;
 
-    cout << left
-         << setw(25) << "Total Trucks"
-         << trucks << "\n";
+    for (int i = n; i > 0; i--) {
+        if (dp[i][remainingCapacity] != dp[i - 1][remainingCapacity]) {
+            selected[i - 1] = true;
+            totalWeight += weight[i - 1];
+            remainingCapacity -= weight[i - 1];
+        }
+    }
 
-    cout << left
-         << setw(25) << "Total Weight Loaded"
-         << grandTotalWeight << " kg\n";
+    // Display results
+    cout << "\n\n==============================================================" << endl;
+    cout << "                 OPTIMIZATION RESULTS" << endl;
+    cout << "==============================================================" << endl;
 
-    cout << left
-         << setw(25) << "Total Utility"
-         << grandTotalUtility << "\n";
+    printf("%-18s %-12s %-15s %-15s\n", "ITEM NAME", "WEIGHT (KG)", "UTILITY", "STATUS");
 
-    cout << "\n================ REMAINING ITEMS ================\n";
-
-    cout << left
-         << setw(12) << "Item"
-         << setw(15) << "Weight (kg)"
-         << setw(15) << "Utility"
-         << setw(15) << "Status"
-         << "\n";
-
-    cout << string(57, '-') << "\n";
+    cout << "--------------------------------------------------------------" << endl;
 
     for (int i = 0; i < n; i++) {
-        cout << left
-             << setw(12) << i + 1
-             << setw(15) << items[i].weight
-             << setw(15) << items[i].utility
-             << setw(15) << (items[i].used ? "Allocated" : "Available")
-             << "\n";
+        printf("%-18s %-12d %-15d %-15s\n",
+               itemNames[i].c_str(), weight[i], value[i],
+               selected[i] ? "SELECTED" : "NOT SELECTED");
     }
 
-    cout << string(57, '-') << "\n";
+    cout << "--------------------------------------------------------------" << endl;
+
+    cout << "\n                 FINAL SUMMARY" << endl;
+    cout << "--------------------------------------------------------------" << endl;
+    cout << "Truck Capacity       : " << W << " kg" << endl;
+    cout << "Total Weight Loaded  : " << totalWeight << " kg" << endl;
+    cout << "Remaining Capacity   : " << (W - totalWeight) << " kg" << endl;
+    cout << "Maximum Total Utility: " << dp[n][W] << endl;
+
+    cout << "\nSelected Relief Items:" << endl;
+
+    bool found = false;
+
+    for (int i = 0; i < n; i++) {
+        if (selected[i]) {
+            cout << "  [+] " << itemNames[i]
+                 << " | Weight: " << weight[i]
+                 << " kg | Utility: " << value[i] << endl;
+            found = true;
+        }
+    }
+
+    if (!found) {
+        cout << "  No items selected." << endl;
+    }
+
+    cout << "\n==============================================================" << endl;
+    cout << "   Optimal resource allocation completed successfully!" << endl;
+    cout << "==============================================================" << endl;
 
     return 0;
 }
